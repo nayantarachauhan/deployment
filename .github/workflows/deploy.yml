@@ -1,1 +1,47 @@
-ghishgiusehgi
+name: CI-CD pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ec2
+    environment: pre-production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Configure Docker credentials
+      uses: docker-actions/configure-docker-credentials@v1
+      with:
+        docker_username: ${{ secrets.DOCKER_USERNAME }}
+        docker_password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push the docker image
+      uses: docker-actions/build-push@v2
+      with:
+        context: .
+        push: true
+        tags: nayantara52/nayan-docker-images/webapp:version1
+
+    - name: Login/deploy to Amazon EC2
+      uses: aws-actions/amazon-ec2-login@v1
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.EC2_key}}
+        script: |
+          docker stop webapp || true
+          docker rm webapp || true
+          docker pull ${{ secrets.DOCKER_USERNAME }}/nayan-docker-images/webapp:version1
+          docker run -d --name webapp -p 80:80 ${{ secrets.DOCKER_USERNAME }}/nayan-docker-images/webapp:version1
+
+
+    
+
+  
+
+
