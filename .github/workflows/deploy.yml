@@ -7,8 +7,9 @@ on:
 jobs:
   deploy:
     name: Deploy
-    runs-on: self-hosted
     environment: pre-production
+    runs-on: self-hosted ${{ secrets.DOCKER_USERNAME }}
+    
 
     steps:
     - name: checkout
