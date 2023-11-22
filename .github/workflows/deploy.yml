@@ -32,7 +32,7 @@ jobs:
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USERNAME }}
-        key: ${{ secrets.EC2_key}}
+        key: ${{ secrets.EC2_KEY}}
         script: |
           docker stop webapp || true
           docker rm webapp || true
