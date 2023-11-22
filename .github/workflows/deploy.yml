@@ -17,7 +17,7 @@ jobs:
     - name: Build and Push Docker Image
       uses: actions/docker/cli@v2
       with:
-        args: build -t nayantara52/nayan-docker-images:version1 .
+        args: build -t nayantara52/nayan-docker-images:latest .
 
     - name: Docker Login
       uses: actions/docker/login@v2
@@ -28,7 +28,7 @@ jobs:
     - name: Push Docker Image to Docker Hub
       uses: actions/docker/cli@v2
       with:
-        args: push nayantara52/nayan-docker-images:version1
+        args: push nayantara52/nayan-docker-images:latest
 
     - name: AWS Login
       uses: aws-actions/configure-aws-credentials@v1
@@ -39,7 +39,7 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no new-ec2-user@ec2-18-220-87-179.us-east-2.compute.amazonaws.com "docker pull nayantara52/nayan-docker-images:version1 && docker run -d -p 80:80 nayantara52/nayan-docker-images:version1"
+        ssh -o StrictHostKeyChecking=no new-ec2-user@ec2-18-220-87-179.us-east-2.compute.amazonaws.com "docker pull nayantara52/nayan-docker-images:latest && docker run -d -p 80:80 nayantara52/nayan-docker-images:latest"
 
 
 
