@@ -23,7 +23,7 @@ jobs:
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v2
       with:
-        context: /home/ec2-user/deployment
+        context: .
         push: true
         tags: nayantara52/nayan-docker-images:latest 
 
