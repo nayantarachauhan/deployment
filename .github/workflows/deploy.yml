@@ -7,11 +7,11 @@ on:
 jobs:
   deploy:
     name: Deploy
-    runs-on: ec2
+    runs-on: self-hosted
     environment: pre-production
 
     steps:
-    - name: Checkout
+    - name: checkout
       uses: actions/checkout@v1
 
     - name: Configure Docker credentials
@@ -25,7 +25,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: nayantara52/nayan-docker-images/webapp:version1
+        tags: nayantara52/nayan-docker-images:version1
 
     - name: Login/deploy to Amazon EC2
       uses: aws-actions/amazon-ec2-login@v1
@@ -34,10 +34,10 @@ jobs:
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.EC2_KEY}}
         script: |
-          docker stop webapp || true
-          docker rm webapp || true
-          docker pull ${{ secrets.DOCKER_USERNAME }}/nayan-docker-images/webapp:version1
-          docker run -d --name webapp -p 80:80 ${{ secrets.DOCKER_USERNAME }}/nayan-docker-images/webapp:version1
+          docker stop nayan-docker-images || true
+          docker rm nayan-docker-images || true
+          docker pull ${{ secrets.DOCKER_USERNAME }}/nayan-docker-images:version1
+          docker run -d --name webapp -p 80:80 ${{ secrets.DOCKER_USERNAME }}/nayan-docker-images:version1
 
 
     
