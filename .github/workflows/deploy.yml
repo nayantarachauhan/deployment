@@ -31,7 +31,7 @@ jobs:
     - name: Login/deploy to Amazon EC2
       uses: aws-actions/amazon-ec2-login@v1
       with:
-        host: ec2-3-17-56-142.us-east-2.compute.amazonaws.com
+        host: ec2-18-220-87-179.us-east-2.compute.amazonaws.com
         username: ec2-user
         key: q212HLOhOUHMu84nReBwd2Fote9huRhDvvXCf24G
         script: |
