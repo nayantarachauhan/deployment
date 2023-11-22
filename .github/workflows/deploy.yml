@@ -8,7 +8,7 @@ jobs:
   deploy:
     name: Deploy
     environment: pre-production
-    runs-on: ${{ secrets.DOCKER_USERNAME }}
+    runs-on: self-hosted
     
 
     steps:
@@ -18,8 +18,8 @@ jobs:
     - name: Configure Docker credentials
       uses: docker-actions/configure-docker-credentials@v1
       with:
-        docker_username: ${{ secrets.DOCKER_USERNAME }}
-        docker_password: ${{ secrets.DOCKER_PASSWORD }}
+        docker_username: nayantara52
+        docker_password: Vkssann@2805
 
     - name: Build and push the docker image
       uses: docker-actions/build-push@v2
@@ -31,14 +31,14 @@ jobs:
     - name: Login/deploy to Amazon EC2
       uses: aws-actions/amazon-ec2-login@v1
       with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USERNAME }}
-        key: ${{ secrets.EC2_KEY}}
+        host: ec2-3-17-56-142.us-east-2.compute.amazonaws.com
+        username: ec2-user
+        key: q212HLOhOUHMu84nReBwd2Fote9huRhDvvXCf24G
         script: |
           docker stop nayan-docker-images || true
           docker rm nayan-docker-images || true
-          docker pull ${{ secrets.DOCKER_USERNAME }}/nayan-docker-images:version1
-          docker run -d --name webapp -p 80:80 ${{ secrets.DOCKER_USERNAME }}/nayan-docker-images:version1
+          docker pull nayantara52/nayan-docker-images:version1
+          docker run -d --name webapp -p 80:80 nayantara52/nayan-docker-images:version1
 
 
     
