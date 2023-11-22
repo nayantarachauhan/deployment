@@ -36,7 +36,7 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no new-ec2-instance@ec2-3-15-155-24.us-east-2.compute.amazonaws.com "docker pull nayantara52/nayan-docker-images:latest && docker run -d -p 80:80 nayantara52/nayan-docker-images:latest"
+        ssh -o StrictHostKeyChecking=no -i ${{ secrets.PEM_KEY }} new-ec2-instance@ec2-3-15-155-24.us-east-2.compute.amazonaws.com "docker pull nayantara52/nayan-docker-images:latest && docker run -d -p 80:80 nayantara52/nayan-docker-images:latest"
 
 
 
