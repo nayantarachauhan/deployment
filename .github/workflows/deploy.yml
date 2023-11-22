@@ -36,7 +36,8 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        "docker pull nayantara52/nayan-docker-images:latest && docker run -d -p 80:80 nayantara52/nayan-docker-images:latest"
+        docker pull nayantara52/nayan-docker-images:latest 
+        docker run -d -p 80:80 nayantara52/nayan-docker-images:latest
 
 
 
